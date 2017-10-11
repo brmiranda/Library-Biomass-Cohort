@@ -325,7 +325,7 @@ namespace Landis.Library.BiomassCohorts
                         cohort.ChangeBiomass(-reduction);
                         cohortData[i] = cohort.Data;
                         //ReduceCohort(i, cohort, disturbance.CurrentSite,disturbance.Type, reduction);
-                        Console.WriteLine("  Partial Reduction: {0}, {1} yrs, {2} Mg/ha", cohort.Species.Name, cohort.Age, cohort.Biomass);
+                        //Console.WriteLine("  Partial Reduction: {0}, {1} yrs, {2} Mg/ha", cohort.Species.Name, cohort.Age, cohort.Biomass);
                         
                     }
                     else {
