@@ -274,7 +274,7 @@ namespace Landis.Library.BiomassCohorts
             Cohort.Died(this, cohort, site, disturbanceType);
         }
 
-        private void ReduceCohort(int index,
+        private void ReduceCohort(//int index,
                                   ICohort cohort,
                                   ActiveSite site,
                                   ExtensionType disturbanceType, float reduction)
@@ -319,19 +319,18 @@ namespace Landis.Library.BiomassCohorts
             for (int i = cohortData.Count - 1; i >= 0; i--) {
                 Cohort cohort = new Cohort(species, cohortData[i]);
                 int reduction = disturbance.ReduceOrKillMarkedCohort(cohort);
-               // Console.WriteLine("  Reduction: {0}, {1} yrs, {2} Mg/ha", cohort.Species.Name, cohort.Age, cohort.Biomass);
+                //Console.WriteLine("  Reduction: {0}, {1} yrs, {2} Mg/ha, reduction={3}", cohort.Species.Name, cohort.Age, cohort.Biomass, reduction);
                 if (reduction > 0) {
                     totalReduction += reduction;
                     if (reduction < cohort.Biomass) {
+                        ReduceCohort(cohort, disturbance.CurrentSite, disturbance.Type, reduction);
                         cohort.ChangeBiomass(-reduction);
                         cohortData[i] = cohort.Data;
-                        ReduceCohort(i, cohort, disturbance.CurrentSite,disturbance.Type, reduction);
                         //Console.WriteLine("  Partial Reduction: {0}, {1} yrs, {2} Mg/ha", cohort.Species.Name, cohort.Age, cohort.Biomass);
                         
                     }
                     else {
-                        RemoveCohort(i, cohort, disturbance.CurrentSite,
-                                     disturbance.Type);
+                        RemoveCohort(i, cohort, disturbance.CurrentSite, disturbance.Type);
                         cohort = null;
                     }
                 }
@@ -373,8 +372,7 @@ namespace Landis.Library.BiomassCohorts
                 if (isSpeciesCohortDamaged[i]) {
                     Cohort cohort = new Cohort(species, cohortData[i]);
                     totalReduction += cohort.Biomass;
-                    RemoveCohort(i, cohort, disturbance.CurrentSite,
-                                 disturbance.Type);
+                    RemoveCohort(i, cohort, disturbance.CurrentSite, disturbance.Type);
                     Cohort.KilledByAgeOnlyDisturbance(this, cohort, disturbance.CurrentSite, disturbance.Type);
                     
                     cohort = null;
