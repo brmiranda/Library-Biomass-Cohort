@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{33808160-94BB-488A-B323-67F091EF4840}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Landis.Library.BiomassCohorts</RootNamespace>
+    <AssemblyName>Landis.Library.BiomassCohorts_vSBW</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Landis.Library.BiomassCohorts_vSBW.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Edu.Wisc.Forest.Flel.Util">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.AgeOnlyCohorts">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.Cohorts">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.SpatialModeling">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="log4net">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cohort.cs" />
+    <Compile Include="CohortData.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CohortDefoliation.cs" />
+    <Compile Include="CohortGrowthReduction.cs" />
+    <Compile Include="Cohorts.cs" />
+    <Compile Include="PartialDeathEventArgs.cs" />
+    <Compile Include="DeathEventArgs.cs" />
+    <Compile Include="PartialDeathEventHandler.cs" />
+    <Compile Include="DeathEventHandler.cs" />
+    <Compile Include="DisturbanceEventArgs.cs" />
+    <Compile Include="DisturbanceEventHandler.cs" />
+    <Compile Include="ICalculator.cs" />
+    <Compile Include="ICohort.cs" />
+    <Compile Include="IDisturbance.cs" />
+    <Compile Include="ISiteCohorts.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISpeciesCohortBoolArray.cs" />
+    <Compile Include="ISpeciesCohorts.cs" />
+    <Compile Include="ISpeciesCohortsDisturbance.cs" />
+    <Compile Include="OldToYoungIterator.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="SiteCohorts.cs" />
+    <Compile Include="SpeciesCohortBoolArray.cs" />
+    <Compile Include="SpeciesCohorts.cs" />
+    <Compile Include="WrappedDisturbance.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetName).* "C:\Program Files\LANDIS-II\v6\bin\extensions"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
