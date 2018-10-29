@@ -18,6 +18,23 @@ namespace Landis.Library.BiomassCohorts
         public int Biomass;
 
         //---------------------------------------------------------------------
+        /// <summary>
+        /// The cohort's defoliaton history (% defol for last 10 years).
+        /// </summary>
+        public double[] DefoliationHistory;
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// The cohort's current year (new) foliage.
+        /// </summary>
+        public int CurrentFoliage;
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// The cohort's total foliage.
+        /// </summary>
+        public int TotalFoliage;
+        //---------------------------------------------------------------------
 
         /// <summary>
         /// Initializes a new instance.
@@ -29,10 +46,16 @@ namespace Landis.Library.BiomassCohorts
         /// The cohort's biomass.
         /// </param>
         public CohortData(ushort age,
-                          int biomass)
+                          int biomass,
+            double[] defoliationHistory,
+            int currentFoliage,
+            int totalFoliage)
         {
             this.Age = age;
             this.Biomass = biomass;
+            this.DefoliationHistory = defoliationHistory;
+            this.CurrentFoliage = currentFoliage;
+            this.TotalFoliage = totalFoliage;
         }
     }
 }

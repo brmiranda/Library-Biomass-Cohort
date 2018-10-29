@@ -87,12 +87,14 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         public SpeciesCohorts(ISpecies species,
                               ushort initialAge,
-                              int   initialBiomass)
+                              int   initialBiomass,
+                              int currentFoliage,
+                              int totalFolage)
         {
             this.species = species;
             this.cohortData = new List<CohortData>();
             this.isMaturePresent = false;
-            AddNewCohort(initialAge, initialBiomass);
+            AddNewCohort(initialAge, initialBiomass, currentFoliage, totalFolage);
         }
 
         //---------------------------------------------------------------------
@@ -126,9 +128,10 @@ namespace Landis.Library.BiomassCohorts
         /// <summary>
         /// Adds a new cohort.
         /// </summary>
-        public void AddNewCohort(ushort age, int initialBiomass)
+        public void AddNewCohort(ushort age, int initialBiomass, int currentFoliage, int totalFoliage)
         {
-            this.cohortData.Add(new CohortData(age, initialBiomass));
+            double[] defolHistory = new double[10];
+            this.cohortData.Add(new CohortData(age, initialBiomass, defolHistory, currentFoliage, totalFoliage));
         }
 
         //---------------------------------------------------------------------
@@ -166,20 +169,38 @@ namespace Landis.Library.BiomassCohorts
             //  young order.
             int youngCount = 0;
             int totalBiomass = 0;
+            int combinedCurrentFoliage = 0;
+            int combinedTotalFoliage = 0;
+            //Budworm
+            // Defoliation History is averaged across cohorts by year
+            double[] defolSum = new double[10];
+            double[] defolHistory = new double[10];
             for (int i = cohortData.Count - 1; i >= 0; i--) {
                 CohortData data = cohortData[i];
                 if (data.Age <= Cohorts.SuccessionTimeStep) {
                     youngCount++;
                     totalBiomass += data.Biomass;
+                    combinedCurrentFoliage += data.CurrentFoliage;
+                    combinedTotalFoliage += data.TotalFoliage;
+                    for (int d = 0; d < 10; d++)
+                    {
+                        double cohortDefol = data.DefoliationHistory[d];
+                        defolSum[d] += cohortDefol;
+                    }
                 }
                 else
                     break;
             }
 
-            if (youngCount > 0) {
+            if (youngCount > 0)
+            {
+                for (int d = 0; d < 10; d++)
+                {
+                    defolHistory[d] = defolSum[d] / youngCount;
+                }
                 cohortData.RemoveRange(cohortData.Count - youngCount, youngCount);
-                cohortData.Add(new CohortData((ushort) (Cohorts.SuccessionTimeStep - 1),
-                                              totalBiomass));
+                cohortData.Add(new CohortData((ushort)(Cohorts.SuccessionTimeStep - 1),
+                                              totalBiomass, defolHistory, combinedCurrentFoliage, combinedTotalFoliage));
             }
         }
 

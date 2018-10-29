@@ -3,7 +3,8 @@
 
 using Landis.Core;
 using Landis.SpatialModeling;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
+//using Edu.Wisc.Forest.Flel.Util;
 
 namespace Landis.Library.BiomassCohorts
 {
@@ -20,7 +21,8 @@ namespace Landis.Library.BiomassCohorts
 
         public ISpecies Species
         {
-            get {
+            get
+            {
                 return species;
             }
         }
@@ -29,7 +31,8 @@ namespace Landis.Library.BiomassCohorts
 
         public ushort Age
         {
-            get {
+            get
+            {
                 return data.Age;
             }
         }
@@ -38,8 +41,37 @@ namespace Landis.Library.BiomassCohorts
 
         public int Biomass
         {
-            get {
+            get
+            {
                 return data.Biomass;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public int CurrentFoliage
+        {
+            get
+            {
+                return data.CurrentFoliage;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public int TotalFoliage
+        {
+            get
+            {
+                return data.TotalFoliage;
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        public double[] DefoliationHistory
+        {
+            get
+            {
+                return data.DefoliationHistory;
             }
         }
 
@@ -50,7 +82,8 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         public CohortData Data
         {
-            get {
+            get
+            {
                 return data;
             }
         }
@@ -59,17 +92,23 @@ namespace Landis.Library.BiomassCohorts
         //---------------------------------------------------------------------
 
         public Cohort(ISpecies species,
-                      ushort   age,
-                      int   biomass)
+                      ushort age,
+                      int biomass,
+                       double[] defoliationHistory,
+            int currentFoliage,
+            int totalFoliage)
         {
             this.species = species;
             this.data.Age = age;
             this.data.Biomass = biomass;
+            this.data.DefoliationHistory = defoliationHistory;
+            this.data.CurrentFoliage = currentFoliage;
+            this.data.TotalFoliage = totalFoliage;
         }
 
         //---------------------------------------------------------------------
 
-        public Cohort(ISpecies   species,
+        public Cohort(ISpecies species,
                       CohortData cohortData)
         {
             this.species = species;
@@ -102,7 +141,7 @@ namespace Landis.Library.BiomassCohorts
         public int ComputeNonWoodyBiomass(ActiveSite site)
         {
             Percentage nonWoodyPercentage = Cohorts.BiomassCalculator.ComputeNonWoodyPercentage(this, site);
-            return (int) (data.Biomass * nonWoodyPercentage);
+            return (int)(data.Biomass * nonWoodyPercentage);
         }
 
         //---------------------------------------------------------------------
@@ -112,6 +151,27 @@ namespace Landis.Library.BiomassCohorts
         /// disturbances.
         /// </summary>
         public static event DeathEventHandler<DeathEventArgs> DeathEvent;
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Raises a Cohort.DeathEvent.
+        /// </summary>
+        public static void Died(object sender,
+                                ICohort cohort,
+                                ActiveSite site,
+                                ExtensionType disturbanceType)
+        {
+            if (DeathEvent != null)
+                DeathEvent(sender, new DeathEventArgs(cohort, site, disturbanceType));
+        }
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Occurs when a cohort is killed by an age-only disturbance.
+        /// </summary>
+        public static event DeathEventHandler<DeathEventArgs> AgeOnlyDeathEvent;
         //---------------------------------------------------------------------
         public static event PartialDeathEventHandler<PartialDeathEventArgs> PartialDeathEvent;
 
@@ -128,40 +188,54 @@ namespace Landis.Library.BiomassCohorts
             if (PartialDeathEvent != null)
                 PartialDeathEvent(sender, new PartialDeathEventArgs(cohort, site, disturbanceType, reduction));
         }
-
-        //---------------------------------------------------------------------
-
-        /// <summary>
-        /// Raises a Cohort.DeathEvent.
-        /// </summary>
-        public static void Died(object     sender,
-                                ICohort    cohort,
-                                ActiveSite site,
-                                ExtensionType disturbanceType)
-        {
-            if (DeathEvent != null)
-                DeathEvent(sender, new DeathEventArgs(cohort, site, disturbanceType));
-        }
-
-        //---------------------------------------------------------------------
-
-        /// <summary>
-        /// Occurs when a cohort is killed by an age-only disturbance.
-        /// </summary>
-        public static event DeathEventHandler<DeathEventArgs> AgeOnlyDeathEvent;
-
         //---------------------------------------------------------------------
 
         /// <summary>
         /// Raises a Cohort.AgeOnlyDeathEvent.
         /// </summary>
-        public static void KilledByAgeOnlyDisturbance(object     sender,
-                                                      ICohort    cohort,
+        public static void KilledByAgeOnlyDisturbance(object sender,
+                                                      ICohort cohort,
                                                       ActiveSite site,
                                                       ExtensionType disturbanceType)
         {
             if (AgeOnlyDeathEvent != null)
                 AgeOnlyDeathEvent(sender, new DeathEventArgs(cohort, site, disturbanceType));
         }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Changes the cohort's current foliage.
+        /// </summary>
+        public void ChangeCurrentFoliage(int newFoliage)
+        {
+            data.CurrentFoliage = newFoliage;
+        }
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Changes the cohort's total foliage.
+        /// </summary>
+        public void ChangeTotalFoliage(int newFoliage)
+        {
+            data.TotalFoliage = newFoliage;
+        }
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Update the defoliation history.
+        /// </summary>
+        public void UpdateDefoliationHistory(double propDefoliation)
+        {
+            double[] newDefolHistory = new double[10];
+            newDefolHistory[0] = propDefoliation;
+
+            for (int i = 0; i < 9; i++)
+            {
+                newDefolHistory[i + 1] = data.DefoliationHistory[i];
+
+            }
+            data.DefoliationHistory = newDefolHistory;
+        }
+
+        //---------------------------------------------------------------------
     }
 }

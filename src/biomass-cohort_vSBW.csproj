@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Landis.Library.BiomassCohorts</RootNamespace>
+    <PackageId>Landis.Library.BiomassCohorts</PackageId>
+    <Authors>Brian Miranda</Authors>
+    <Company>LANDIS-II Foundation</Company>
+    <Product>Landis.Library.BiomassCohorts_vSBW</Product>
+    <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Library-BiomassCohorts</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.1.0.0</FileVersion>
+    <AssemblyName>Landis.Library.BiomassCohorts_vSBW</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Landis.Core">
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II-v7\v7\Landis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.Cohorts-v2">
+      <HintPath>..\..\Support-Library-Dlls-v7\Landis.Library.Cohorts-v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.SpatialModeling">
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II-v7\v7\Landis.SpatialModeling.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Utilities">
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II-v7\v7\Landis.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II-v7\v7\log4net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetPath)  &quot;C:\Program Files\LANDIS-II-v7\extensions&quot;" />
+  </Target>
+
+</Project>
