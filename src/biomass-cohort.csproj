@@ -36,32 +36,26 @@
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Core">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\Landis.Core.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.AgeOnlyCohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Cohorts">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\Landis.SpatialModeling.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
-      <HintPath>..\..\Support-Library-Dlls\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -100,11 +94,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetName).* "C:\Program Files\LANDIS-II\v6\bin\extensions"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>call $(SolutionDir)\install-libs.cmd</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
