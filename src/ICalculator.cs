@@ -1,9 +1,8 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Robert M. Scheller, James B. Domingo
 
 using Landis.Core;
 using Landis.SpatialModeling;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 
 namespace Landis.Library.BiomassCohorts
 {
@@ -13,19 +12,6 @@ namespace Landis.Library.BiomassCohorts
     /// </summary>
     public interface ICalculator
     {
-        /// <summary>
-        /// The total mortality (excluding annual leaf litter) for the cohort
-        /// that was passed as a parameter in the most recent call to the
-        /// ComputeChange method.
-        /// </summary>
-        /// <remarks>
-        /// Reflects the cohort's contribution to the growing space available
-        /// next year.
-        /// </remarks>
-        //int MortalityWithoutLeafLitter
-        //{
-        //    get;
-        //}
 
         //---------------------------------------------------------------------
 
@@ -45,15 +31,9 @@ namespace Landis.Library.BiomassCohorts
         /// <param name="prevYearSiteMortality">
         /// The total mortality at the site during the previous year.
         /// </param>
-//        int ComputeChange(ICohort cohort,
-//                          ActiveSite site);
-                          //int siteBiomass);
-                          //int        prevYearSiteMortality);
 
         int ComputeChange(ICohort cohort,
                           ActiveSite site);
-                          //int siteBiomass,
-                          //int prevYearSiteMortality);
 
         //---------------------------------------------------------------------
 
