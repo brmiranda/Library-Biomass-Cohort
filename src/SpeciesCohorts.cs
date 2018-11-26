@@ -278,7 +278,6 @@ namespace Landis.Library.BiomassCohorts
                                   ActiveSite site,
                                   ExtensionType disturbanceType, float reduction)
         {
-            //cohortData.RemoveAt(index);
             Cohort.PartialMortality(this, cohort, site, disturbanceType, reduction);
         }
         //---------------------------------------------------------------------
