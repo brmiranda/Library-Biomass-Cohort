@@ -1,4 +1,3 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Robert M. Scheller, James B. Domingo
 
 using Landis.Core;
@@ -279,7 +278,6 @@ namespace Landis.Library.BiomassCohorts
                                   ActiveSite site,
                                   ExtensionType disturbanceType, float reduction)
         {
-            //cohortData.RemoveAt(index);
             Cohort.PartialMortality(this, cohort, site, disturbanceType, reduction);
         }
         //---------------------------------------------------------------------

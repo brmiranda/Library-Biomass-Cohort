@@ -1,9 +1,8 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Robert M. Scheller, James B. Domingo
 
 using Landis.Core;
 using Landis.SpatialModeling;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 
 namespace Landis.Library.BiomassCohorts
 {
@@ -116,7 +115,6 @@ namespace Landis.Library.BiomassCohorts
         public static event PartialDeathEventHandler<PartialDeathEventArgs> PartialDeathEvent;
 
         /// <summary>
-        /// Scheller TESTING 12/2016
         /// Raises a Cohort.DeathEvent if partial mortality.
         /// </summary>
         public static void PartialMortality(object sender,
