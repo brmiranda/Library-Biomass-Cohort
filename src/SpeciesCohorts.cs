@@ -1,3 +1,4 @@
+//  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Robert M. Scheller, James B. Domingo
 
 using Landis.Core;
@@ -93,7 +94,20 @@ namespace Landis.Library.BiomassCohorts
             this.isMaturePresent = false;
             AddNewCohort(initialAge, initialBiomass);
         }
+        //---------------------------------------------------------------------
 
+        /// <summary>
+        /// Initializes a new instance with one young cohort (age = 1).
+        /// </summary>
+        public SpeciesCohorts(ISpecies species,
+                              ushort initialAge,
+                              int initialBiomass, int initialANPP)
+        {
+            this.species = species;
+            this.cohortData = new List<CohortData>();
+            this.isMaturePresent = false;
+            AddNewCohort(initialAge, initialBiomass, initialANPP);
+        }
         //---------------------------------------------------------------------
 
         /// <summary>
@@ -119,15 +133,22 @@ namespace Landis.Library.BiomassCohorts
         {
             this.species = species;
         }
-
         //---------------------------------------------------------------------
-
         /// <summary>
         /// Adds a new cohort.
         /// </summary>
         public void AddNewCohort(ushort age, int initialBiomass)
         {
             this.cohortData.Add(new CohortData(age, initialBiomass));
+        }
+
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Adds a new cohort.
+        /// </summary>
+        public void AddNewCohort(ushort age, int initialBiomass, int initialANPP)
+        {
+            this.cohortData.Add(new CohortData(age, initialBiomass, initialANPP));
         }
 
         //---------------------------------------------------------------------
@@ -253,7 +274,7 @@ namespace Landis.Library.BiomassCohorts
 
         //---------------------------------------------------------------------
 
-        private void RemoveCohort(int        index,
+        public void RemoveCohort(int        index,
                                   ICohort    cohort,
                                   ActiveSite site,
                                   ExtensionType disturbanceType)
@@ -273,13 +294,6 @@ namespace Landis.Library.BiomassCohorts
             Cohort.Died(this, cohort, site, disturbanceType);
         }
 
-        private void ReduceCohort(//int index,
-                                  ICohort cohort,
-                                  ActiveSite site,
-                                  ExtensionType disturbanceType, float reduction)
-        {
-            Cohort.PartialMortality(this, cohort, site, disturbanceType, reduction);
-        }
         //---------------------------------------------------------------------
 
         /// <summary>
@@ -317,18 +331,15 @@ namespace Landis.Library.BiomassCohorts
             for (int i = cohortData.Count - 1; i >= 0; i--) {
                 Cohort cohort = new Cohort(species, cohortData[i]);
                 int reduction = disturbance.ReduceOrKillMarkedCohort(cohort);
-                //Console.WriteLine("  Reduction: {0}, {1} yrs, {2} Mg/ha, reduction={3}", cohort.Species.Name, cohort.Age, cohort.Biomass, reduction);
                 if (reduction > 0) {
                     totalReduction += reduction;
                     if (reduction < cohort.Biomass) {
-                        ReduceCohort(cohort, disturbance.CurrentSite, disturbance.Type, reduction);
                         cohort.ChangeBiomass(-reduction);
                         cohortData[i] = cohort.Data;
-                        //Console.WriteLine("  Partial Reduction: {0}, {1} yrs, {2} Mg/ha", cohort.Species.Name, cohort.Age, cohort.Biomass);
-                        
                     }
                     else {
-                        RemoveCohort(i, cohort, disturbance.CurrentSite, disturbance.Type);
+                        RemoveCohort(i, cohort, disturbance.CurrentSite,
+                                     disturbance.Type);
                         cohort = null;
                     }
                 }
@@ -338,6 +349,71 @@ namespace Landis.Library.BiomassCohorts
             return totalReduction;
         }
 
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Computes current forage for a cohort
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public int UpdateForage(IDisturbance disturbance)
+        {
+            //  Go backwards through list of cohort data, so the removal of an
+            //  item doesn't mess up the loop.
+            int totalForage = 0;
+            for (int i = cohortData.Count - 1; i >= 0; i--)
+            {
+                Cohort cohort = new Cohort(species, cohortData[i]);
+                int forage = disturbance.ChangeForage(cohort);
+                cohort.ChangeForage(forage);
+                cohortData[i] = cohort.Data;
+                totalForage += forage;
+            }
+            return totalForage;
+        }
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Computes current forage in reach for a cohort
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public int UpdateForageInReach(IDisturbance disturbance)
+        {
+            //  Go backwards through list of cohort data, so the removal of an
+            //  item doesn't mess up the loop.
+            int totalForageInReach = 0;
+            for (int i = cohortData.Count - 1; i >= 0; i--)
+            {
+                Cohort cohort = new Cohort(species, cohortData[i]);
+                int forageInReach = disturbance.ChangeForageInReach(cohort);
+                cohort.ChangeForageInReach(forageInReach);
+                cohortData[i] = cohort.Data;
+                totalForageInReach += forageInReach;
+            }
+            return totalForageInReach;
+        }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Computes last browse prop for a cohort
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public double UpdateLastBrowseProp(IDisturbance disturbance)
+        {
+            //  Go backwards through list of cohort data, so the removal of an
+            //  item doesn't mess up the loop.
+            double totalBrowseProp = 0;
+            for (int i = cohortData.Count - 1; i >= 0; i--)
+            {
+                Cohort cohort = new Cohort(species, cohortData[i]);
+                double lastBrowseProp = disturbance.ChangeLastBrowseProp(cohort);
+                cohort.ChangeLastBrowseProp(lastBrowseProp);
+                cohortData[i] = cohort.Data;
+                totalBrowseProp += lastBrowseProp;
+            }
+            return totalBrowseProp;
+        }
         //---------------------------------------------------------------------
 
         private static AgeOnlyCohorts.SpeciesCohortBoolArray isSpeciesCohortDamaged;
@@ -370,7 +446,8 @@ namespace Landis.Library.BiomassCohorts
                 if (isSpeciesCohortDamaged[i]) {
                     Cohort cohort = new Cohort(species, cohortData[i]);
                     totalReduction += cohort.Biomass;
-                    RemoveCohort(i, cohort, disturbance.CurrentSite, disturbance.Type);
+                    RemoveCohort(i, cohort, disturbance.CurrentSite,
+                                 disturbance.Type);
                     Cohort.KilledByAgeOnlyDisturbance(this, cohort, disturbance.CurrentSite, disturbance.Type);
                     
                     cohort = null;

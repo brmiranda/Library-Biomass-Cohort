@@ -3,6 +3,7 @@
 using Landis.Core;
 using Landis.SpatialModeling;
 using Landis.Utilities;
+using System;
 
 namespace Landis.Library.BiomassCohorts
 {
@@ -39,6 +40,42 @@ namespace Landis.Library.BiomassCohorts
         {
             get {
                 return data.Biomass;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public int ANPP
+        {
+            get
+            {
+                return data.ANPP;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public int Forage
+        {
+            get
+            {
+                return data.Forage;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public int ForageInReach
+        {
+            get
+            {
+                return data.ForageInReach;
+            }
+        }
+
+        //---------------------------------------------------------------------
+        public double LastBrowseProp
+        {
+            get
+            {
+                return data.LastBrowseProp;
             }
         }
 
@@ -95,7 +132,40 @@ namespace Landis.Library.BiomassCohorts
             int newBiomass = data.Biomass + delta;
             data.Biomass = System.Math.Max(0, newBiomass);
         }
-
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Sets the cohort's ANPP.
+        /// </summary>
+        public void ChangeANPP(int anpp)
+        {
+            data.ANPP = Math.Max(0, anpp);
+        }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Sets the cohort's Forage.
+        /// </summary>
+        public void ChangeForage(int forage)
+        {
+            int newForage = Math.Min(forage, data.ANPP);
+            data.Forage = Math.Max(0, forage);
+        }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Sets the cohort's ForageInReach.
+        /// </summary>
+        public void ChangeForageInReach(int forageInReach)
+        {
+            int newForageInReach = Math.Min(forageInReach, data.Forage);
+            data.ForageInReach = Math.Max(0, newForageInReach);
+        }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// Sets the cohort's LastBrowseProp.
+        /// </summary>
+        public void ChangeLastBrowseProp(double lastBrowseProp)
+        {
+            data.LastBrowseProp = lastBrowseProp;
+        }
         //---------------------------------------------------------------------
 
         public int ComputeNonWoodyBiomass(ActiveSite site)
