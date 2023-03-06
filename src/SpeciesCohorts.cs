@@ -186,11 +186,13 @@ namespace Landis.Library.BiomassCohorts
             //  young order.
             int youngCount = 0;
             int totalBiomass = 0;
+            int totalANPP = 0;
             for (int i = cohortData.Count - 1; i >= 0; i--) {
                 CohortData data = cohortData[i];
                 if (data.Age <= Cohorts.SuccessionTimeStep) {
                     youngCount++;
                     totalBiomass += data.Biomass;
+                    totalANPP += data.ANPP;
                 }
                 else
                     break;
@@ -198,8 +200,7 @@ namespace Landis.Library.BiomassCohorts
 
             if (youngCount > 0) {
                 cohortData.RemoveRange(cohortData.Count - youngCount, youngCount);
-                cohortData.Add(new CohortData((ushort) (Cohorts.SuccessionTimeStep - 1),
-                                              totalBiomass));
+                cohortData.Add(new CohortData((ushort) (Cohorts.SuccessionTimeStep - 1),totalBiomass, totalANPP));
             }
         }
 
@@ -356,7 +357,7 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         /// <returns>
         /// </returns>
-        public int UpdateForage(IDisturbance disturbance)
+        /*public int UpdateForage(IDisturbance disturbance)
         {
             //  Go backwards through list of cohort data, so the removal of an
             //  item doesn't mess up the loop.
@@ -370,7 +371,7 @@ namespace Landis.Library.BiomassCohorts
                 totalForage += forage;
             }
             return totalForage;
-        }
+        }*/
         //---------------------------------------------------------------------
 
         /// <summary>
@@ -378,7 +379,7 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         /// <returns>
         /// </returns>
-        public int UpdateForageInReach(IDisturbance disturbance)
+        /*public int UpdateForageInReach(IDisturbance disturbance)
         {
             //  Go backwards through list of cohort data, so the removal of an
             //  item doesn't mess up the loop.
@@ -392,14 +393,14 @@ namespace Landis.Library.BiomassCohorts
                 totalForageInReach += forageInReach;
             }
             return totalForageInReach;
-        }
+        }*/
         //---------------------------------------------------------------------
         /// <summary>
         /// Computes last browse prop for a cohort
         /// </summary>
         /// <returns>
         /// </returns>
-        public double UpdateLastBrowseProp(IDisturbance disturbance)
+        /*public double UpdateLastBrowseProp(IDisturbance disturbance)
         {
             //  Go backwards through list of cohort data, so the removal of an
             //  item doesn't mess up the loop.
@@ -413,7 +414,7 @@ namespace Landis.Library.BiomassCohorts
                 totalBrowseProp += lastBrowseProp;
             }
             return totalBrowseProp;
-        }
+        }*/
         //---------------------------------------------------------------------
 
         private static AgeOnlyCohorts.SpeciesCohortBoolArray isSpeciesCohortDamaged;

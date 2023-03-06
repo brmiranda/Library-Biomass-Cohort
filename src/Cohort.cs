@@ -53,31 +53,31 @@ namespace Landis.Library.BiomassCohorts
         }
 
         //---------------------------------------------------------------------
-        public int Forage
+       /* public int Forage
         {
             get
             {
                 return data.Forage;
             }
         }
-
+       */
         //---------------------------------------------------------------------
-        public int ForageInReach
+        /*public int ForageInReach
         {
             get
             {
                 return data.ForageInReach;
             }
         }
-
+        */
         //---------------------------------------------------------------------
-        public double LastBrowseProp
+        /*public double LastBrowseProp
         {
             get
             {
                 return data.LastBrowseProp;
             }
-        }
+        }*/
 
         //---------------------------------------------------------------------
 
@@ -144,28 +144,28 @@ namespace Landis.Library.BiomassCohorts
         /// <summary>
         /// Sets the cohort's Forage.
         /// </summary>
-        public void ChangeForage(int forage)
+        /*public void ChangeForage(int forage)
         {
             int newForage = Math.Min(forage, data.ANPP);
             data.Forage = Math.Max(0, forage);
-        }
+        }*/
         //---------------------------------------------------------------------
         /// <summary>
         /// Sets the cohort's ForageInReach.
         /// </summary>
-        public void ChangeForageInReach(int forageInReach)
+        /*public void ChangeForageInReach(int forageInReach)
         {
             int newForageInReach = Math.Min(forageInReach, data.Forage);
             data.ForageInReach = Math.Max(0, newForageInReach);
-        }
+        }*/
         //---------------------------------------------------------------------
         /// <summary>
         /// Sets the cohort's LastBrowseProp.
         /// </summary>
-        public void ChangeLastBrowseProp(double lastBrowseProp)
+        /*public void ChangeLastBrowseProp(double lastBrowseProp)
         {
             data.LastBrowseProp = lastBrowseProp;
-        }
+        }*/
         //---------------------------------------------------------------------
 
         public int ComputeNonWoodyBiomass(ActiveSite site)

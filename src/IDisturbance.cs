@@ -39,9 +39,9 @@ namespace Landis.Library.BiomassCohorts
         /// </returns>
         int ReduceOrKillMarkedCohort(ICohort cohort);
         
-        int  ChangeForage(ICohort cohort);
-        int ChangeForageInReach(ICohort cohort);
-        double ChangeLastBrowseProp(ICohort cohort);
+        //int  ChangeForage(ICohort cohort);
+        //int ChangeForageInReach(ICohort cohort);
+        //double ChangeLastBrowseProp(ICohort cohort);
 
     }
 }

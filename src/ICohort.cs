@@ -29,18 +29,18 @@ namespace Landis.Library.BiomassCohorts
         /// <summary>
         /// The cohort's Forage (g m-2).
         /// </summary>
-        int Forage
+        /*int Forage
         {
             get;
-        }
+        }*/
         //---------------------------------------------------------------------
         /// <summary>
         /// The cohort's Forage in Reach (g m-2).
         /// </summary>
-        int ForageInReach
+        /*int ForageInReach
         {
             get;
-        }
+        }*/
         //---------------------------------------------------------------------
         /// <summary>
         /// Computes how much of the cohort's biomass is non-woody.
@@ -62,27 +62,27 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         /// <param name="newForage"></param>
         /// <returns></returns>
-        void ChangeForage(int newForage);
+        //void ChangeForage(int newForage);
         //---------------------------------------------------------------------
         /// <summary>
         /// Changes the cohort's forage in reach
         /// </summary>
         /// <param name="newForage"></param>
         /// <returns></returns>
-        void ChangeForageInReach(int newForageInReach);
+        //void ChangeForageInReach(int newForageInReach);
         ///---------------------------------------------------------------------
         /// <summary>
         /// Changes the cohort's last browse prop
         /// </summary>
         /// <param name="newForage"></param>
         /// <returns></returns>
-        void ChangeLastBrowseProp(double lastBrowseProp);
+        //void ChangeLastBrowseProp(double lastBrowseProp);
         //---------------------------------------------------------------------
 
         void ChangeBiomass(int delta);
-        CohortData Data
-        {
-            get;
-        }
+        //CohortData Data
+        //{
+         //   get;
+        //}
     }
 }

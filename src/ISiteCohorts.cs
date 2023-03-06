@@ -23,21 +23,21 @@ namespace Landis.Library.BiomassCohorts
         /// </summary>
         /// <returns>
         /// </returns>
-        int UpdateForage(IDisturbance disturbance);
+        //int UpdateForage(IDisturbance disturbance);
         //---------------------------------------------------------------------
         /// <summary>
         /// Assigns the updated forage in reach to a cohort.
         /// </summary>
         /// <returns>
         /// </returns>
-        int UpdateForageInReach(IDisturbance disturbance);
+        //int UpdateForageInReach(IDisturbance disturbance);
         //---------------------------------------------------------------------
         /// <summary>
         /// Assigns the last browse prop to a cohort.
         /// </summary>
         /// <returns>
         /// </returns>
-        double UpdateLastBrowseProp(IDisturbance disturbance);
+        //double UpdateLastBrowseProp(IDisturbance disturbance);
         //---------------------------------------------------------------------
     }
 }

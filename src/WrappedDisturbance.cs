@@ -55,32 +55,32 @@ namespace Landis.Library.BiomassCohorts
         }
 
         //---------------------------------------------------------------------
-        public int ChangeForage(ICohort cohort)
+        /*public int ChangeForage(ICohort cohort)
         {
             return 0;
-        }
+        }*/
         //---------------------------------------------------------------------
-        public void UpdateForage(ActiveSite site)
+        /*public void UpdateForage(ActiveSite site)
         {
-        }
+        }*/
         //---------------------------------------------------------------------
-        public int ChangeForageInReach(ICohort cohort)
-        {
-            return 0;
-        }
-        //---------------------------------------------------------------------
-        public void UpdateForageInReach(ActiveSite site)
-        {
-        }
-        //---------------------------------------------------------------------
-        public double ChangeLastBrowseProp(ICohort cohort)
+        /*public int ChangeForageInReach(ICohort cohort)
         {
             return 0;
-        }
+        }*/
         //---------------------------------------------------------------------
-        public void UpdateLastBrowseProp(ActiveSite site)
+        /*public void UpdateForageInReach(ActiveSite site)
         {
-        }
+        }*/
+        //---------------------------------------------------------------------
+        /*public double ChangeLastBrowseProp(ICohort cohort)
+        {
+            return 0;
+        }*/
+        //---------------------------------------------------------------------
+        /*public void UpdateLastBrowseProp(ActiveSite site)
+        {
+        }*/
         //---------------------------------------------------------------------
     }
 }
